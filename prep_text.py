@@ -3,8 +3,6 @@ __author__: str = 'Pouya "Adrian" Firouzmakan'
 import numpy as np
 import re
 from sklearn.base import BaseEstimator, TransformerMixin
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing.sequence import pad_sequences
 from config.config import config
 import util.util as util
 

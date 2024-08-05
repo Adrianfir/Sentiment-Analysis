@@ -9,4 +9,5 @@ class DefModel():
     def __init__(self):
         self.n_lstm_layers = config['model']['n_lstm_layers']
         self.units = config['model']['units']
-        self.embedding_
+        self.embed_input_length = config['model']['embed_input_length']
+        self.embed_output_dim = config['model']['embed_out_put_dim']
