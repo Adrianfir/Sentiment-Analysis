@@ -27,11 +27,22 @@ if __name__ == "__main.py__":
     padding = Padding(maxlen=config['data']['max_seq_length'])
     xtrain_pad = pad_sequences(xtrain, maxlen=config['data'][''])
 
+    lstm_model = DefModel(embed_input_dim=config['model']['input_dim'],
+                          embed_input_length=config['model']['input_length'],
+                          embed_output_dim=config['model']['output_dim'],
+                          n_lstm_layers=config['model']['n_lstm_layers'],
+                          n_units=config['model']['n_units'],
+                          drop_rate=config['model']['drop_rate'])
+
     operations = [('re_text', re_text),
                   ('tokenizer', tokenizer),
                   ('padding', padding),
                   ('lstm_model', lstm_model)]
 
     pipe_line = Pipeline(steps=operations)
+
+    pipe_line.compile()
+    pipe_line.fit(xtrain, ytrain)
+
 
 

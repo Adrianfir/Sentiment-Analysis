@@ -8,7 +8,11 @@
     "tokenizer_n_words":  20000},
 
   "model": {"n_lstm_layers": 2,
-            "n_units": 128},
+            "n_units": 128,
+            "n_words":  20000,
+            "input_length": 100,
+            "output_dim": 128,
+            "drop_rate": 0.2},
   "rest": {"rand_state": 42}
 
 }
