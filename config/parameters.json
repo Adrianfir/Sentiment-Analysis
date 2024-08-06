@@ -1,18 +1,23 @@
 {
   "data": {
-    "path":"/Users/pouyafirouzmakan/Desktop/sentiment140.csv",
-    "col_names": ["target", "id", "date", "flag", "user_name", "comment"],
-    "text_col": "comment",
-    "label_col": "target",
-    "test_size": 0.2,
-    "tokenizer_n_words":  20000},
+            "path":"/Users/pouyafirouzmakan/Desktop/sentiment140.csv",
+            "col_names": ["target", "id", "date", "flag", "user_name", "comment"],
+            "text_col": "comment",
+            "label_col": "target",
+            "test_size": 0.2,
+            "tokenizer_n_words": 20000,
+            "max_seq_length": 100},
 
-  "model": {"n_lstm_layers": 2,
-            "n_units": 128,
+  "model":
+           {"n_lstm_layers": 2,
+            "n_units": 8,
             "n_words":  20000,
             "input_length": 100,
-            "output_dim": 128,
-            "drop_rate": 0.2},
-  "rest": {"rand_state": 42}
+            "output_dim": 8,
+            "drop_rate": 0.2,
+            "epochs": 2,
+            "batch_size": 64},
+  "rest":
+           {"rand_state": 42}
 
 }
