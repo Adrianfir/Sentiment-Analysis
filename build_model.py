@@ -5,7 +5,7 @@ from sklearn.base import BaseEstimator
 
 class DefModel(BaseEstimator):
     def __init__(self, embed_input_dim, embed_input_length, embed_output_dim,
-                 n_lstm_layers, n_units, drop_rate):
+                 n_lstm_layers, n_units, drop_rate, val_split):
         self.embed_input_dim = embed_input_dim
         self.embed_input_length = embed_input_length
         self.embed_output_dim = embed_output_dim
@@ -29,13 +29,13 @@ class DefModel(BaseEstimator):
         model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
         return model
 
-    def fit(self, x, y, epochs=5, batch_size=64, validation_data=None):
+    def fit(self, x, y, epochs=5, batch_size=64, validation_split=0.2):
         self.model = self.build_model()
-        self.model.fit(x, y, epochs=epochs, batch_size=batch_size, validation_data=validation_data)
+        self.model.fit(x, y, epochs=epochs, batch_size=batch_size, validation_split=validation_split)
         return self
 
     def predict(self, x):
-        return (self.model.predict(x) > 0.5).astype("int32")
+        return (self.model.predict(x)).astype("int32")
 
     def score(self, x, y):
         loss, accuracy = self.model.evaluate(x, y)

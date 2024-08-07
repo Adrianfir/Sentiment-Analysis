@@ -16,39 +16,36 @@ from tokenizing import Tokenizing  # Import the custom tokenizer
 from config.config import config
 
 if __name__ == "__main__":
-    # Load data
     df = pd.read_csv(config['data']['path'], encoding='latin1')
     df.columns = config['data']['col_names']
     x = df[config['data']['text_col']]
     y = df[config['data']['label_col']]
 
-    # Split data
     xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=config['data']['test_size'],
                                                     random_state=config['rest']['rand_state'])
 
-    # Initialize preprocessing components
     re_text = PrepText()
     tokenizer = Tokenizing(num_words=config['data']['tokenizer_n_words'])  # Use custom wrapper
     padding = Padding(maxlen=config['data']['max_seq_length'])
 
-    # Initialize the Keras model
     lstm_model = DefModel(embed_input_dim=config['data']['tokenizer_n_words'],
                           embed_input_length=config['data']['max_seq_length'],
                           embed_output_dim=config['model']['emb_output_dim'],
                           n_lstm_layers=config['model']['n_lstm_layers'],
                           n_units=config['model']['n_units'],
-                          drop_rate=config['model']['drop_rate'])
+                          drop_rate=config['model']['drop_rate'],
+                          val_split=config['model']['val_split'])
 
     pipeline = Pipeline([
-        ('preprocess', re_text),
+        ('re_text', re_text),
         ('tokenizer', tokenizer),
         ('padding', padding),
-        ('lstm', lstm_model)
+        ('lstm_model', lstm_model)
     ])
 
-    history = pipeline.fit(xtrain, ytrain, lstm__epochs=config['model']['epochs'],
-                           lstm__validation_data=(xtest, ytest),
-                           lstm__batch_size=config['model']['batch_size'])
+    pipeline.fit(xtrain, ytrain, lstm_model__epochs=config['model']['epochs'],
+                 lstm_model__batch_size=config['model']['batch_size'],
+                 lstm_model__validation_split=config['model']['val_split'])
 
     accuracy = pipeline.score(xtest, ytest)
     print(f"Test Accuracy: {accuracy:.4f}")
