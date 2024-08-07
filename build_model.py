@@ -29,9 +29,9 @@ class DefModel(BaseEstimator):
         model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
         return model
 
-    def fit(self, x, y, epochs=5, batch_size=64):
+    def fit(self, x, y, epochs=5, batch_size=64, validation_data=None):
         self.model = self.build_model()
-        self.model.fit(x, y, epochs=epochs, batch_size=batch_size)
+        self.model.fit(x, y, epochs=epochs, batch_size=batch_size, validation_data=validation_data)
         return self
 
     def predict(self, x):

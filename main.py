@@ -5,6 +5,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 import tensorflow as tf
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+from tensorflow.keras.models import save_model
+import matplotlib.pyplot as plt
+import joblib
 
 from prep_text import PrepText
 from padding import Padding
@@ -31,7 +34,7 @@ if __name__ == "__main__":
     # Initialize the Keras model
     lstm_model = DefModel(embed_input_dim=config['data']['tokenizer_n_words'],
                           embed_input_length=config['data']['max_seq_length'],
-                          embed_output_dim=config['model']['output_dim'],
+                          embed_output_dim=config['model']['emb_output_dim'],
                           n_lstm_layers=config['model']['n_lstm_layers'],
                           n_units=config['model']['n_units'],
                           drop_rate=config['model']['drop_rate'])
@@ -43,8 +46,10 @@ if __name__ == "__main__":
         ('lstm', lstm_model)
     ])
 
-    pipeline.fit(xtrain, ytrain, lstm__epochs=config['model']['epochs'],
-                 lstm__batch_size=config['model']['batch_size'])
+    history = pipeline.fit(xtrain, ytrain, lstm__epochs=config['model']['epochs'],
+                           lstm__validation_data=(xtest, ytest),
+                           lstm__batch_size=config['model']['batch_size'])
 
     accuracy = pipeline.score(xtest, ytest)
     print(f"Test Accuracy: {accuracy:.4f}")
+    joblib.dump(pipeline, 'saved_pipeline.pkl')
