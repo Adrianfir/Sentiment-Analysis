@@ -11,6 +11,8 @@ nltk.download('wordnet')
 class StopStemLemmat():
     def __init__(self):
         self.stop_words = set(stopwords.words('english'))
+        self.lemmatizer = None
+        self.stemmer = None
 
     def fit(self, x, y=None):
         self.stemmer = PorterStemmer()
