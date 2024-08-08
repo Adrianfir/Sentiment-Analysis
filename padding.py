@@ -15,6 +15,6 @@ class Padding(BaseEstimator, TransformerMixin):
 
     def transform(self, x, y=None):
         data = x
-        data_pad = pad_sequences(data, maxlen=self.maxlen)
+        data_pad = pad_sequences(data, maxlen=self.maxlen, padding='post', truncating='post')
 
         return data_pad

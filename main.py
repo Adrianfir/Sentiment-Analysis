@@ -25,16 +25,14 @@ if __name__ == "__main__":
                                                     random_state=config['rest']['rand_state'])
 
     re_text = PrepText()
-    tokenizer = Tokenizing(num_words=config['data']['tokenizer_n_words'])  # Use custom wrapper
+    tokenizer = Tokenizing(num_words=config['data']['max_words'])
     padding = Padding(maxlen=config['data']['max_seq_length'])
 
-    lstm_model = DefModel(embed_input_dim=config['data']['tokenizer_n_words'],
+    lstm_model = DefModel(embed_input_dim=config['data']['max_words'],
                           embed_input_length=config['data']['max_seq_length'],
                           embed_output_dim=config['model']['emb_output_dim'],
-                          n_lstm_layers=config['model']['n_lstm_layers'],
                           n_units=config['model']['n_units'],
-                          drop_rate=config['model']['drop_rate'],
-                          val_split=config['model']['val_split'])
+                          drop_rate=config['model']['drop_rate'])
 
     pipeline = Pipeline([
         ('re_text', re_text),
