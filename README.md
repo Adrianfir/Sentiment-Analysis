@@ -19,13 +19,13 @@ To run this project, download Sentiment140.csv dataset and change the path in pa
 
 This script will:
 
-1- Load the dataset.
-2- Split the data into training and testing sets.
-3- Preprocess the text.
-4- Tokenize and pad the sequences.
-5- Build and train an LSTM model.
-6- Evaluate the model on the test set.
-7- Save the trained pipeline to a file.
+1-Load the dataset.
+2-Split the data into training and testing sets.
+3-Preprocess the text.
+4-Tokenize and pad the sequences.
+5-Build and train an LSTM model.
+6-Evaluate the model on the test set.
+7-Save the trained pipeline to a file.
 
 ## Project Structure
 
