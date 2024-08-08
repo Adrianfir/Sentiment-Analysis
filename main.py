@@ -5,9 +5,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 import tensorflow as tf
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.models import save_model
 import matplotlib.pyplot as plt
 import joblib
+import nltk
 
 from prep_text import PrepText
 from padding import Padding
@@ -17,6 +17,7 @@ from stop_stem_lemmat import StopStemLemmat
 from config.config import config
 
 if __name__ == "__main__":
+
     df = pd.read_csv(config['data']['path'], encoding='latin1')
     df.columns = config['data']['col_names']
     x = df[config['data']['text_col']]
@@ -26,8 +27,13 @@ if __name__ == "__main__":
                                                     random_state=config['rest']['rand_state'])
 
     re_text = PrepText()
+
     tokenizer = Tokenizing(num_words=config['data']['max_words'])
+
+    nltk.download('stopwords')
+    nltk.download('wordnet')
     stopping_stemming_lemmatizing = StopStemLemmat()
+
     padding = Padding(maxlen=config['data']['max_seq_length'])
 
     lstm_model = DefModel(embed_input_dim=config['data']['max_words'],

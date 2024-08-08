@@ -1,16 +1,14 @@
 __author__: str = 'Pouya "Adrian" Firouzmakan'
 
 from sklearn.base import BaseEstimator, TransformerMixin
-import nltk
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer, WordNetLemmatizer
-nltk.download('stopwords')
-nltk.download('wordnet')
 
 
-class StopStemLemmat():
+class StopStemLemmat(BaseEstimator, TransformerMixin):
     def __init__(self):
         self.stop_words = set(stopwords.words('english'))
+        self.stop_words.remove('not')
         self.lemmatizer = None
         self.stemmer = None
 
