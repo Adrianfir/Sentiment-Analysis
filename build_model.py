@@ -34,7 +34,7 @@ class DefModel(BaseEstimator):
     def fit(self, x, y, epochs, batch_size, validation_split):
         self.model = self.build_model()
         self.model.fit(x, y, epochs=epochs, batch_size=batch_size,
-                       validation_split=validation_split, verbose=1)
+                       validation_split=validation_split, verbose=2)
         return self
 
     def predict(self, x):

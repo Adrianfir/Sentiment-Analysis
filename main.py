@@ -13,6 +13,7 @@ from prep_text import PrepText
 from padding import Padding
 from build_model import DefModel  # Import the wrapper class
 from tokenizing import Tokenizing  # Import the custom tokenizer
+from stop_stem_lemmat import StopStemLemmat
 from config.config import config
 
 if __name__ == "__main__":
@@ -26,6 +27,7 @@ if __name__ == "__main__":
 
     re_text = PrepText()
     tokenizer = Tokenizing(num_words=config['data']['max_words'])
+    stopping_stemming_lemmatizing = StopStemLemmat()
     padding = Padding(maxlen=config['data']['max_seq_length'])
 
     lstm_model = DefModel(embed_input_dim=config['data']['max_words'],
@@ -37,6 +39,7 @@ if __name__ == "__main__":
     pipeline = Pipeline([
         ('re_text', re_text),
         ('tokenizer', tokenizer),
+        ('stopping_stemming_lemmatizing', stopping_stemming_lemmatizing),
         ('padding', padding),
         ('lstm_model', lstm_model)
     ])
