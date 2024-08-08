@@ -32,6 +32,8 @@ if __name__ == "__main__":
 
     nltk.download('stopwords')
     nltk.download('wordnet')
+    nltk.data.path.append('/Users/pouyafirouzmakan/nltk_data')
+
     stopping_stemming_lemmatizing = StopStemLemmat()
 
     padding = Padding(maxlen=config['data']['max_seq_length'])
