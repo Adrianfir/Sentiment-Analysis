@@ -6,12 +6,13 @@ from sklearn.base import BaseEstimator
 
 class DefModel(BaseEstimator):
     def __init__(self, embed_input_dim, embed_input_length, embed_output_dim,
-                 n_units, drop_rate):
+                 n_units, drop_rate, learning_rate):
         self.embed_input_dim = embed_input_dim
         self.embed_input_length = embed_input_length
         self.embed_output_dim = embed_output_dim
         self.n_units = n_units
         self.drop_rate = drop_rate
+        self.learning_rate = learning_rate
         self.model = None
 
     def build_model(self):
@@ -27,14 +28,14 @@ class DefModel(BaseEstimator):
         # Final output layer for binary classification
         model.add(Dense(1, activation='sigmoid'))
         model.compile(loss='binary_crossentropy',
-                      optimizer=tf.keras.optimizers.Adam(),
+                      optimizer=tf.keras.optimizers.Adam(learning_rate=self.learning_rate),
                       metrics=['accuracy'])
         return model
 
     def fit(self, x, y, epochs, batch_size, validation_split):
         self.model = self.build_model()
         self.model.fit(x, y, epochs=epochs, batch_size=batch_size,
-                       validation_split=validation_split, verbose=2)
+                       validation_split=validation_split, verbose=1)
         return self
 
     def predict(self, x):

@@ -9,12 +9,13 @@
             "max_seq_length": 300},
 
   "model":
-           {"n_units": [128],
-            "emb_output_dim": 128,
+           {"n_units": [256, 256, 128, 128],
+            "emb_output_dim": 256,
             "drop_rate": 0.5,
             "epochs": 10,
              "val_split": 0.2,
-            "batch_size": 64},
+            "batch_size": 64,
+            "learning_rate":  0.0001},
   "rest":
            {"rand_state": 42}
 

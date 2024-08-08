@@ -19,6 +19,7 @@ from config.config import config
 if __name__ == "__main__":
 
     df = pd.read_csv(config['data']['path'], encoding='latin1')
+    df = df.iloc[0:1000000]
     df.columns = config['data']['col_names']
     x = df[config['data']['text_col']]
     y = df[config['data']['label_col']]
@@ -30,10 +31,6 @@ if __name__ == "__main__":
 
     tokenizer = Tokenizing(num_words=config['data']['max_words'])
 
-    nltk.download('stopwords')
-    nltk.download('wordnet')
-    nltk.data.path.append('/Users/pouyafirouzmakan/nltk_data')
-
     stopping_stemming_lemmatizing = StopStemLemmat()
 
     padding = Padding(maxlen=config['data']['max_seq_length'])
@@ -42,12 +39,13 @@ if __name__ == "__main__":
                           embed_input_length=config['data']['max_seq_length'],
                           embed_output_dim=config['model']['emb_output_dim'],
                           n_units=config['model']['n_units'],
-                          drop_rate=config['model']['drop_rate'])
+                          drop_rate=config['model']['drop_rate'],
+                          learning_rate=config['model']['learning_rate'])
 
     pipeline = Pipeline([
         ('re_text', re_text),
         ('tokenizer', tokenizer),
-        ('stopping_stemming_lemmatizing', stopping_stemming_lemmatizing),
+        # ('stopping_stemming_lemmatizing', stopping_stemming_lemmatizing),
         ('padding', padding),
         ('lstm_model', lstm_model)
     ])
