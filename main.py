@@ -40,7 +40,8 @@ if __name__ == "__main__":
                           embed_output_dim=config['model']['emb_output_dim'],
                           n_units=config['model']['n_units'],
                           drop_rate=config['model']['drop_rate'],
-                          learning_rate=config['model']['learning_rate'])
+                          learning_rate=config['model']['learning_rate'],
+                          clipnorm=config['model']['clipnorm'])
 
     pipeline = Pipeline([
         ('re_text', re_text),

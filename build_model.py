@@ -6,13 +6,14 @@ from sklearn.base import BaseEstimator
 
 class DefModel(BaseEstimator):
     def __init__(self, embed_input_dim, embed_input_length, embed_output_dim,
-                 n_units, drop_rate, learning_rate):
+                 n_units, drop_rate, learning_rate, clipnorm):
         self.embed_input_dim = embed_input_dim
         self.embed_input_length = embed_input_length
         self.embed_output_dim = embed_output_dim
         self.n_units = n_units
         self.drop_rate = drop_rate
         self.learning_rate = learning_rate
+        self.clipnorm = clipnorm
         self.model = None
 
     def build_model(self):
@@ -28,7 +29,7 @@ class DefModel(BaseEstimator):
         # Final output layer for binary classification
         model.add(Dense(1, activation='sigmoid'))
         model.compile(loss='binary_crossentropy',
-                      optimizer=tf.keras.optimizers.Adam(learning_rate=self.learning_rate),
+                      optimizer=tf.keras.optimizers.Adam(learning_rate=self.learning_rate, clipnorm=self.clipnorm),
                       metrics=['accuracy'])
         return model
 
